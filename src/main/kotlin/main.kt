@@ -1,10 +1,11 @@
 import kotlin.random.Random
 
 fun main() {
+
     val post = Post(0, 0, 0, 0, "text", false, 0, false)
     val reposts = Reposts(10, false)
     val init = post.copy(text = "Hello Netology")
-    println(init)
+    //println(init)
     println(WallService.add(post))
     println(WallService.update(post))
     println(post)
@@ -23,8 +24,8 @@ data class Post(
 object WallService {
     private var posts = emptyArray<Post>() // массив с постами
     fun add(post: Post): Post {
+        post.id = Random.nextInt(+999)+1
         posts += post
-        post.id = Random.nextInt(999)
         return post
     }
 
@@ -35,7 +36,7 @@ object WallService {
                 posts[index] = post.copy(text = "изменил")
                 result = true
                 println(posts[index])
-            } else result = false
+            }
         }
         return result
     }
