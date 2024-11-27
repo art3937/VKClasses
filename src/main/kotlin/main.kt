@@ -1,15 +1,15 @@
 import kotlin.random.Random
 
 fun main() {
-
-    val post = Post(0, 0, 0, 0, "text", false, 0, false)
     val reposts = Reposts(10, false)
-    val init = post.copy(text = "Hello Netology")
-    //println(init)
+    val post = Post(
+        0, 0, 0, 0,
+        "text", false, 0,
+        false,reposts
+    )
     println(WallService.add(post))
     println(WallService.update(post))
     println(post)
-
 }
 
 data class Post(
@@ -18,13 +18,14 @@ data class Post(
     val replyOwnerId: Int, //Идентификатор владельца записи, в ответ на которую была оставлена текущая.
     val text: String, val friendsOnly: Boolean, //1, если запись была создана с опцией «Только для друзей».
     val replyPostId: Int, //Идентификатор записи, в ответ на которую была оставлена текущая
-    val canDelete: Boolean //Информация о том, может ли текущий пользователь удалить запись (1 — может, 0 — не может)
+    val canDelete: Boolean, //Информация о том, может ли текущий пользователь удалить запись (1 — может, 0 — не может)
+    val reposts: Reposts
 )
 
 object WallService {
-    private var posts = emptyArray<Post>() // массив с постами
+     var posts = emptyArray<Post>() // массив с постами
     fun add(post: Post): Post {
-        post.id = Random.nextInt(+999)+1
+        post.id = Random.nextInt(+999) + 1
         posts += post
         return post
     }
@@ -33,7 +34,7 @@ object WallService {
         var result = false
         for ((index, anotherPost) in posts.withIndex()) {
             if (post.id == anotherPost.id) {
-                posts[index] = post.copy(text = "изменил")
+                posts[index] = post
                 result = true
                 println(posts[index])
             }
