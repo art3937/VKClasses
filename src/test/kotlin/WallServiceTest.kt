@@ -34,6 +34,6 @@ class WallServiceTest {
     @Test
     fun updateFalse() {
         val postReform = post.copy(id = 10)
-        assertEquals(true, WallService.update(postReform))
+        assertEquals(false, WallService.update(postReform))
     }
 }
