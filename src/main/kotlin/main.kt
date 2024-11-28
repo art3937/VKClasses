@@ -5,7 +5,7 @@ fun main() {
     val post = Post(
         0, 0, 0, 0,
         "text", false, 0,
-        false,reposts
+        false, reposts
     )
     println(WallService.add(post))
     println(WallService.update(post))
@@ -23,11 +23,11 @@ data class Post(
 )
 
 object WallService {
-     var posts = emptyArray<Post>() // массив с постами
+    var posts = emptyArray<Post>() // массив с постами
     fun add(post: Post): Post {
-        post.id = Random.nextInt(+999) + 1
         posts += post
-        return post
+        posts.last().id++
+        return posts.last()
     }
 
     fun update(post: Post): Boolean {
@@ -36,7 +36,6 @@ object WallService {
             if (post.id == anotherPost.id) {
                 posts[index] = post
                 result = true
-                println(posts[index])
             }
         }
         return result

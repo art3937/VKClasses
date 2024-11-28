@@ -20,16 +20,15 @@ class WallServiceTest {
 
     @Test
     fun add() {
-
         posts += post
-        post.id ++
+        posts.last().id++
         assertTrue(posts.last().id > 0)
     }
 
     @Test
     fun update() {
-     posts += post
-        assertTrue( WallService.update(post))
+        posts += post
+        assertTrue(WallService.update(post))
     }
 
     @Test
