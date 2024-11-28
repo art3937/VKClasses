@@ -1,5 +1,3 @@
-import kotlin.random.Random
-
 fun main() {
     val reposts = Reposts(10, false)
     val post = Post(
@@ -31,9 +29,10 @@ object WallService {
 
     fun update(post: Post): Boolean {
         var result = false
+        val copyPost = post
         for ((index, anotherPost) in posts.withIndex()) {
-            if (post.id == anotherPost.id) {
-                posts[index] = post
+            if (copyPost.id == anotherPost.id) {
+                posts[index] = copyPost
                 result = true
             }
         }
@@ -42,6 +41,7 @@ object WallService {
 
     fun clear() {
         posts = emptyArray()
+        count = 0
         // также здесь нужно сбросить счетчик для id постов, если он у вас используется
     }
 }
