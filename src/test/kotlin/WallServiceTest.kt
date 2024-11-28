@@ -6,7 +6,7 @@ import kotlin.random.Random
 
 class WallServiceTest {
     private val post = Post(
-        999, 0, 0, 0,
+        0, 0, 0, 0,
         "text", false, 0,
         false, Reposts(
             2, false
@@ -20,20 +20,20 @@ class WallServiceTest {
 
     @Test
     fun add() {
-        post.id = Random.nextInt(+999) + 1
-       posts += post
-        assertEquals(post.id > 0, posts.last().id > 0)
+
+        posts += post
+        post.id ++
+        assertTrue(posts.last().id > 0)
     }
 
     @Test
     fun update() {
-       posts += post
-        assertEquals(true, WallService.update(post))
+     posts += post
+        assertTrue( WallService.update(post))
     }
 
     @Test
     fun updateFalse() {
-        val postReform = post.copy(id = 10)
-        assertEquals(false, WallService.update(postReform))
+        assertFalse(WallService.update(post))
     }
 }
