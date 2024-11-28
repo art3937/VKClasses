@@ -3,13 +3,10 @@ import kotlin.random.Random
 fun main() {
     val reposts = Reposts(10, false)
     val post = Post(
-        0, 0, 0, 0,
-        "text", false, 0,
-        false, reposts
+        0, 0, 0, 0, "text", false, 0, false, reposts
     )
     println(WallService.add(post))
     println(WallService.update(post))
-    println(post)
 }
 
 data class Post(
@@ -23,10 +20,12 @@ data class Post(
 )
 
 object WallService {
-    var posts = emptyArray<Post>() // массив с постами
+    private var posts = emptyArray<Post>() // массив с постами
+    private var count = 0
     fun add(post: Post): Post {
-        posts += post
-        posts.last().id++
+        count++
+        val copyPost = post.copy(id = count)
+        posts += copyPost
         return posts.last()
     }
 
