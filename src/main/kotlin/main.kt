@@ -4,7 +4,13 @@ fun main() {
     val reposts: Reposts? = null
     val video = VideoAttachment(Video(10, 20, "vkvideo", 10))
     val photo = PhotoAttachment(Photo(5, 6, "gddng", "fgnffh"))
+    val file = FileAttachment(File(5,10,"FileName",255))
+    val image = ImageAttachment(Image())
+    val doc = DocAttachment(Doc())
+    AttachmentService.add(doc)
     AttachmentService.add(photo)
+    AttachmentService.add(file)
+    AttachmentService.add(image)
     val attachmentArray = AttachmentService.add(video)
     val post = Post(
         0,
