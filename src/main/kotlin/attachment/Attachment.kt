@@ -2,6 +2,7 @@ package attachment
 
 interface Attachment {
     val type: String
+
 }
 
 data class Video(

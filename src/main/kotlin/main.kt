@@ -1,5 +1,10 @@
 package attachment
+
+import comment.Comment
+import exception.PostNotFoundException
+
 fun main() {
+
     val reposts: Reposts? = null
     val video = VideoAttachment(Video(10, 20, "vkvideo", 10))
     val photo = PhotoAttachment(Photo(5, 6, "gddng", "fgnffh"))
@@ -25,10 +30,11 @@ fun main() {
     )
     println(WallService.add(post))
     println(WallService.update(post))
+    println(WallService.createComment(1, Comment(attachment = AttachmentService.attachment)))
 }
 
 object AttachmentService {
-    private var attachment = emptyArray<Attachment>()
+    var attachment = emptyArray<Attachment>()
     fun add(content: Attachment): Array<Attachment> {
         attachment += content
         return attachment
@@ -36,16 +42,16 @@ object AttachmentService {
 }
 
 data class Post(
-    var id: Int,
-    val fromId: Int, //Идентификатор автора записи (от чьего имени опубликована запись).
-    val createdBy: Int, //Идентификатор администратора, который опубликовал запись
-    val replyOwnerId: Int, //Идентификатор владельца записи, в ответ на которую была оставлена текущая.
-    val text: String,
-    val friendsOnly: Boolean, //1, если запись была создана с опцией «Только для друзей».
-    val replyPostId: Int, //Идентификатор записи, в ответ на которую была оставлена текущая
-    val canDelete: Boolean, //Информация о том, может ли текущий пользователь удалить запись (1 — может, 0 — не может)
-    val reposts: Reposts?,
-    val attachment: Array<Attachment>?
+    var id: Int = 0,
+    val fromId: Int = 0, //Идентификатор автора записи (от чьего имени опубликована запись).
+    val createdBy: Int = 0, //Идентификатор администратора, который опубликовал запись
+    val replyOwnerId: Int = 0, //Идентификатор владельца записи, в ответ на которую была оставлена текущая.
+    val text: String = "",
+    val friendsOnly: Boolean = false, //1, если запись была создана с опцией «Только для друзей».
+    val replyPostId: Int = 0, //Идентификатор записи, в ответ на которую была оставлена текущая
+    val canDelete: Boolean = false, //Информация о том, может ли текущий пользователь удалить запись (1 — может, 0 — не может)
+    val reposts: Reposts? = Reposts(),
+    val attachment: Array<Attachment>? = emptyArray()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -60,6 +66,7 @@ data class Post(
 }
 
 object WallService {
+    private var comments = emptyArray<Comment>()
     private var posts = emptyArray<Post>() // массив с постами
     private var count = 0
     fun add(post: Post): Post {
@@ -81,6 +88,17 @@ object WallService {
         return result
     }
 
+    fun createComment(postId: Int, comment: Comment): Comment {
+        for ((index, anotherPost) in posts.withIndex()) {
+            if (postId == anotherPost.id) {
+                comments += comment
+            } else {
+                throw PostNotFoundException("Ид не найден")
+            }
+        }
+        return comments.last()
+    }
+
     fun clear() {
         posts = emptyArray()
         count = 0
@@ -89,8 +107,8 @@ object WallService {
 }
 
 class Reposts(
-    val count: Int, //число пользователей, скопировавших запись;
-    val userReposted: Boolean
+    val count: Int = 0, //число пользователей, скопировавших запись;
+    val userReposted: Boolean = false
 )  //наличие репоста от текущего пользователя (1 — есть, 0 — нет)
 {
 //Логика
