@@ -22,21 +22,12 @@ class WallServiceTest {
     fun add() {
         val copyPost = post
         val result: Post = WallService.add(copyPost)
-<<<<<<< HEAD
-        assertTrue(result.id>0)
-=======
         assertTrue(result.id > 0)
->>>>>>> MyAttachment
-
     }
 
     @Test
     fun update() {
-<<<<<<< HEAD
-        val copyPost = post
-=======
         val copyPost = post.copy()
->>>>>>> MyAttachment
         assertTrue(WallService.update(WallService.add(copyPost)))
     }
 

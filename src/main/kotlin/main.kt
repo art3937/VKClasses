@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-=======
 package attachment
-
->>>>>>> MyAttachment
 fun main() {
     val reposts: Reposts? = null
     val video = VideoAttachment(Video(10, 20, "vkvideo", 10))
     val photo = PhotoAttachment(Photo(5, 6, "gddng", "fgnffh"))
-    val file = FileAttachment(File(5,10,"FileName",255))
+    val file = FileAttachment(File(5, 10, "FileName", 255))
     val image = ImageAttachment(Image())
     val doc = DocAttachment(Doc())
     AttachmentService.add(doc)
@@ -75,11 +71,7 @@ object WallService {
 
     fun update(post: Post): Boolean {
         var result = false
-<<<<<<< HEAD
-        val copyPost = post
-=======
         val copyPost = post.copy()
->>>>>>> MyAttachment
         for ((index, anotherPost) in posts.withIndex()) {
             if (copyPost.id == anotherPost.id) {
                 posts[index] = copyPost
@@ -95,6 +87,7 @@ object WallService {
         // также здесь нужно сбросить счетчик для id постов, если он у вас используется
     }
 }
+
 class Reposts(
     val count: Int, //число пользователей, скопировавших запись;
     val userReposted: Boolean
