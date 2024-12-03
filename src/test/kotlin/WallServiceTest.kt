@@ -1,7 +1,7 @@
+import attachment.*
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import kotlin.random.Random
 
 class WallServiceTest {
 
@@ -10,7 +10,7 @@ class WallServiceTest {
         "text", false, 0,
         false, Reposts(
             2, false
-        )
+        ), AttachmentService.add(Photo(1, 2, "", ""))
     )
 
     @Before
@@ -22,18 +22,27 @@ class WallServiceTest {
     fun add() {
         val copyPost = post
         val result: Post = WallService.add(copyPost)
+<<<<<<< HEAD
         assertTrue(result.id>0)
+=======
+        assertTrue(result.id > 0)
+>>>>>>> MyAttachment
 
     }
 
     @Test
     fun update() {
+<<<<<<< HEAD
         val copyPost = post
+=======
+        val copyPost = post.copy()
+>>>>>>> MyAttachment
         assertTrue(WallService.update(WallService.add(copyPost)))
     }
 
     @Test
     fun updateFalse() {
-        assertFalse(WallService.update(post))
+        val copyPost = post.copy()
+        assertFalse(WallService.update(copyPost))
     }
 }
