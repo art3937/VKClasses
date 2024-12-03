@@ -16,7 +16,9 @@ data class Photo(
     val ownerId: Int = 0,
     val photo604: String = "",
     val photo130: String = "",
-)
+): Attachment{
+    override val type: String = "file"//Нужно для теста
+}
 
 data class File(
     val id: Int = 0, //ид файла
