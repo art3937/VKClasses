@@ -1,12 +1,9 @@
 package comment
 
 import attachment.Attachment
-import attachment.Post
-import attachment.WallService
-import exception.PostNotFoundException
 
 data class Comment(
-    val id: Int = 0,
+    val id: Int = 2,
     val fromInt: Int = 0, // Идентификатор автора комментария.
     val date: Int = 0, //Дата создания комментария в формате
     val text: String = "",//Текст комментария.

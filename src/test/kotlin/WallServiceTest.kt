@@ -1,4 +1,6 @@
 import attachment.*
+import comment.Comment
+import exception.PostNotFoundException
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -35,5 +37,12 @@ class WallServiceTest {
     fun updateFalse() {
         val copyPost = post.copy()
         assertFalse(WallService.update(copyPost))
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow() {
+        // здесь код с вызовом функции, которая должна выкинуть PostNotFoundException
+        add()
+        WallService.createComment(2, Comment())
     }
 }
