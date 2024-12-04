@@ -69,6 +69,7 @@ object WallService {
     private var comments = emptyArray<Comment>()
     private var posts = emptyArray<Post>() // массив с постами
     private var count = 0
+    private var quantity = 0
     fun add(post: Post): Post {
         count++
         val copyPost = post.copy(id = count)
@@ -92,17 +93,19 @@ object WallService {
         for ((index, anotherPost) in posts.withIndex()) {
             if (postId == anotherPost.id) {
                 comments += comment
-            } else {
-                throw PostNotFoundException("Ид не найден")
+                quantity++
             }
         }
-        return comments.last()
+        if (quantity == 0) throw PostNotFoundException("Ид не найден") else
+            return comments.last()
     }
 
     fun clear() {
         posts = emptyArray()
         count = 0
-        // также здесь нужно сбросить счетчик для id постов, если он у вас используется
+        quantity = 0
+        // также здесь нужно
+        // сбросить счетчик для id постов, если он у вас используется
     }
 }
 
