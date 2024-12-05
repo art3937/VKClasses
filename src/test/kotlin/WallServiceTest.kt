@@ -7,13 +7,7 @@ import org.junit.Test
 
 class WallServiceTest {
 
-    private val post = Post(
-        2, 0, 0, 0,
-        "text", false, 0,
-        false, Reposts(
-            2, false
-        ), AttachmentService.add(Photo(1, 2, "", ""))
-    )
+    private val post = Post()
 
     @Before
     fun clearBeforeTest() {
@@ -41,14 +35,15 @@ class WallServiceTest {
 
     @Test(expected = PostNotFoundException::class)
     fun shouldThrow() {
+        WallService.add(post)
         // здесь код с вызовом функции, которая должна выкинуть PostNotFoundException
-        add()
-       WallService.createComment(2,Comment())
+        WallService.createComment(2, Comment())
     }
 
-    @Test(expected = PostNotFoundException::class)
-    fun shouldThrowFalse() {
-        // здесь код с вызовом функции, которая должна выкинуть PostNotFoundException
-        WallService.createComment(1,Comment())
+    @Test
+    fun creatCommentTrue() {
+        WallService.add(post)
+        val result: Comment = WallService.createComment(1, Comment())
+        assertTrue(result.id > 0)
     }
 }

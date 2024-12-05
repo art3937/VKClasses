@@ -3,7 +3,7 @@ package comment
 import attachment.Attachment
 
 data class Comment(
-    val id: Int = 2,
+    val id: Int = 1,
     val fromInt: Int = 0, // Идентификатор автора комментария.
     val date: Int = 0, //Дата создания комментария в формате
     val text: String = "",//Текст комментария.

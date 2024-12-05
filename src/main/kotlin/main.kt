@@ -16,21 +16,10 @@ fun main() {
     AttachmentService.add(file)
     AttachmentService.add(image)
     val attachmentArray = AttachmentService.add(video)
-    val post = Post(
-        0,
-        0,
-        0,
-        0,
-        "text",
-        false,
-        0,
-        false,
-        reposts,
-        attachmentArray
-    )
+    val post = Post()
     println(WallService.add(post))
     println(WallService.update(post))
-    println(WallService.createComment(1, Comment(attachment = AttachmentService.attachment)))
+   println(WallService.createComment(1, Comment(attachment = AttachmentService.attachment)))
 }
 
 object AttachmentService {
@@ -69,7 +58,6 @@ object WallService {
     private var comments = emptyArray<Comment>()
     private var posts = emptyArray<Post>() // массив с постами
     private var count = 0
-    private var quantity = 0
     fun add(post: Post): Post {
         count++
         val copyPost = post.copy(id = count)
@@ -90,20 +78,20 @@ object WallService {
     }
 
     fun createComment(postId: Int, comment: Comment): Comment {
+        var commentLast: Comment? = null
         for ((index, anotherPost) in posts.withIndex()) {
             if (postId == anotherPost.id) {
-                comments += comment
-                quantity++
+               comments += comment
+              commentLast = comments.last()
             }
         }
-        if (quantity == 0) throw PostNotFoundException("Ид не найден") else
-            return comments.last()
+            return commentLast ?: throw PostNotFoundException("Ид не найден")
     }
 
     fun clear() {
         posts = emptyArray()
         count = 0
-        quantity = 0
+        comments = emptyArray()
         // также здесь нужно
         // сбросить счетчик для id постов, если он у вас используется
     }
